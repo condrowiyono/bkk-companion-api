@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import safeParseResponse from "./utils/safeParseJSON";
+import safeParseResponse from "./utils/safeParseResponse";
 
 dotenv.config();
 
