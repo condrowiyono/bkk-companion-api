@@ -3,10 +3,12 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 
-import safeParseResponse from "./utils/safeParseResponse";
-import authRouter from "./routers/authRouter";
-import approvalRouter from "./routers/approvalRouter";
 import jwtMiddleware from "./middleware/jwt";
+import safeParseResponse from "./utils/safeParseResponse";
+
+import approvalRouter from "./routers/approvalRouter";
+import authRouter from "./routers/authRouter";
+import profileRouter from "./routers/profileRouter";
 
 dotenv.config();
 
@@ -24,6 +26,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(authRouter);
 app.use(approvalRouter);
+app.use(profileRouter);
 
 // protected routes
 app.get("/protected", jwtMiddleware, (req: Request, res: Response) => {
