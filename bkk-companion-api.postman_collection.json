@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "b07eb216-cc0d-491e-bfdb-5e2a4e9dde6b",
+		"name": "bkk-companion-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31473232"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"employe_id\": \"5952\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Condro\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Protected",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llX2lkIjoiNTk1MiIsInRva2VuIjoiYXNkZnJld3EiLCJpYXQiOjE3MDkyOTIwMzMsImV4cCI6MTcxMDE1NjAzM30.Il2ab2y0KS1AE7Vj2WZQ4dKGIju4qhJevexZCslY0Ls",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/protected/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"protected",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects History",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llX2lkIjoiNTk1MiIsInRva2VuIjoiYXNkZnJld3EiLCJpYXQiOjE3MDkyOTIwMzMsImV4cCI6MTcxMDE1NjAzM30.Il2ab2y0KS1AE7Vj2WZQ4dKGIju4qhJevexZCslY0Ls",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/protected/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"protected",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Projects Detail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llX2lkIjoiNTk1MiIsInRva2VuIjoiYXNkZnJld3EiLCJpYXQiOjE3MDkyOTIwMzMsImV4cCI6MTcxMDE1NjAzM30.Il2ab2y0KS1AE7Vj2WZQ4dKGIju4qhJevexZCslY0Ls",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/protected/projects/IF016-24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"protected",
+						"projects",
+						"IF016-24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve Project",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llX2lkIjoiNTk1MiIsInRva2VuIjoiYXNkZnJld3EiLCJpYXQiOjE3MDkyOTIwMzMsImV4cCI6MTcxMDE1NjAzM30.Il2ab2y0KS1AE7Vj2WZQ4dKGIju4qhJevexZCslY0Ls",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/protected/projects/IF016-24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"protected",
+						"projects",
+						"IF016-24"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
