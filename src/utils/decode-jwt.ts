@@ -8,16 +8,25 @@ type DecodedType = {
   exp: number;
 };
 
+const JWT_SECRET = process.env.JWT_SECRET || "secret";
+
 const decodeJwt = (req: Request) => {
-  // Bearer token
-  const token = req.headers.authorization?.split(" ")[1];
+  const authorizationHeader = req.header("Authorization");
+  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+    return null;
+  }
+
+  const token = authorizationHeader.replace("Bearer ", "");
   if (!token) {
     return null;
   }
 
-  const jwtSecret = process.env.JWT_SECRET || "secret";
-  const decoded = jwt.verify(token, jwtSecret);
-  return decoded as DecodedType;
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    return decoded as DecodedType;
+  } catch (err) {
+    throw err;
+  }
 };
 
 export { decodeJwt };

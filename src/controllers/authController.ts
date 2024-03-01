@@ -1,19 +1,9 @@
-import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { serverLogin } from "../services/login";
+import { Request, Response } from "express";
 import { generateRefreshToken, generateToken } from "../utils/auth";
+import { AuthPayload, RefreshTokenPayload } from "../interfaces/auth";
 
-type AuthType = {
-  employe_id: string;
-  password: string;
-};
-
-type RefreshTokenType = {
-  employe_id: string;
-  refresh_token: string;
-};
-
-const authenticateUser = async (req: Request<AuthType, any, AuthType>, res: Response) => {
+const authenticateUser = async (req: Request<AuthPayload, any, AuthPayload>, res: Response) => {
   const { employe_id, password } = req.body ?? {};
 
   if (!employe_id || !password) {
@@ -21,10 +11,9 @@ const authenticateUser = async (req: Request<AuthType, any, AuthType>, res: Resp
     return;
   }
 
-  // TODO: Implement user authentication
   try {
-    const data = await serverLogin(employe_id, password);
-    console.log(data);
+    // TODO)) Implement user authentication
+    // const data = await serverLogin(employe_id, password);
     const token = generateToken(employe_id);
     const refreshToken = generateRefreshToken(employe_id);
 
@@ -38,7 +27,7 @@ const authenticateUser = async (req: Request<AuthType, any, AuthType>, res: Resp
   }
 };
 
-const refreshToken = (req: Request<RefreshTokenType, any, RefreshTokenType>, res: Response) => {
+const refreshToken = (req: Request<RefreshTokenPayload, any, RefreshTokenPayload>, res: Response) => {
   const { refresh_token } = req.body ?? {};
 
   if (!refresh_token) {

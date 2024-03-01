@@ -1,7 +1,7 @@
-const safeParseResponse = async (response: Response) => {
+const safeParseResponse = async <T extends any>(response: Response) => {
   if (response.ok) {
     try {
-      const data = await response.json();
+      const data: T = await response.json();
       return data;
     } catch (e) {
       throw new Error("Error parsing data");

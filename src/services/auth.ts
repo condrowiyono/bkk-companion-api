@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { ServerLoginResponse } from "../interfaces/login";
+import { ServerLoginResponse } from "../interfaces/auth";
 
 dotenv.config();
 
@@ -22,8 +22,6 @@ const serverLogin = async (username: string, password: string) => {
     }
 
     const data = (await response.json()) as ServerLoginResponse;
-
-    console.log(data);
 
     if (data[0].statuss === 1) {
       return data;

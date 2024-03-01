@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+const JWT_SECRET = process.env.JWT_SECRET || "secret";
+
 const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const authorizationHeader = req.header("Authorization");
   if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
@@ -14,10 +16,7 @@ const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    const jwtSecret = process.env.JWT_SECRET || "secret";
-
-    const decoded = jwt.verify(token, jwtSecret);
-    console.log("decoded", decoded);
+    jwt.verify(token, JWT_SECRET);
 
     next();
   } catch (err) {
@@ -25,4 +24,5 @@ const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).json({ success: false, message: "Invalid token" });
   }
 };
+
 export default jwtMiddleware;
