@@ -13,11 +13,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3000",
+					"raw": "{{base_url}}",
 					"host": [
-						"localhost"
-					],
-					"port": "3000"
+						"{{base_url}}"
+					]
 				}
 			},
 			"response": []
@@ -37,11 +36,10 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/login",
+					"raw": "{{base_url}}/login",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
 						"login"
 					]
@@ -64,13 +62,12 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/login",
+					"raw": "{{base_url}}/refresh",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
-						"login"
+						"refresh"
 					]
 				}
 			},
@@ -82,11 +79,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3000/protected",
+					"raw": "{{base_url}}/protected",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
 						"protected"
 					]
@@ -100,12 +96,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/protected/projects",
-					"protocol": "http",
+					"raw": "{{base_url}}/protected/projects",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
 						"protected",
 						"projects"
@@ -120,12 +114,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/protected/projects-history",
-					"protocol": "http",
+					"raw": "{{base_url}}/protected/projects-history",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
 						"protected",
 						"projects-history"
@@ -140,12 +132,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/protected/projects/IF016-24",
-					"protocol": "http",
+					"raw": "{{base_url}}/protected/projects/IF016-24",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
 						"protected",
 						"projects",
@@ -162,7 +152,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"approvals\": 0\n}",
+					"raw": "{\n    \"approvals\": 2\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -170,12 +160,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/protected/approve-projects/IF016-24",
-					"protocol": "http",
+					"raw": "{{base_url}}/protected/approve-projects/IF016-24",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "3000",
 					"path": [
 						"protected",
 						"approve-projects",
@@ -191,7 +179,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llX2lkIjoiNTk1MiIsInRva2VuIjoiYXNkZnJld3EiLCJpYXQiOjE3MDkyOTkzMzgsImV4cCI6MTcxMDE2MzMzOH0.dYyvkI0f6Kuyg6IL3qtyE5JuyJp0PowSmNo27xijqas",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llX2lkIjoiNTk1MiIsInRva2VuIjoiYXNkZnJld3EiLCJpYXQiOjE3MDkzMDEwOTEsImV4cCI6MTcxMDE2NTA5MX0.MZEyVAXvkINYX0l8n75Gi9NSg_1469tfPupVfVgqKM8",
 				"type": "string"
 			}
 		]
@@ -214,6 +202,13 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://bkk-api.orbitallabs.net",
+			"type": "string"
 		}
 	]
 }
