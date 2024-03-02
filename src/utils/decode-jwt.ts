@@ -25,7 +25,7 @@ const decodeJwt = (req: Request) => {
     const decoded = jwt.verify(token, JWT_SECRET);
     return decoded as DecodedType;
   } catch (err) {
-    throw err;
+    return null;
   }
 };
 
