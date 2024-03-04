@@ -12,7 +12,7 @@ export type ServerLoginRequest = {
 };
 
 export type AuthPayload = {
-  employe_id: string;
+  username: string;
   password: string;
 };
 

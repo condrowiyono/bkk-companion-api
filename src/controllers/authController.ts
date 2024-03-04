@@ -5,18 +5,18 @@ import { AuthPayload, RefreshTokenPayload } from "../interfaces/auth";
 import { serverLogin } from "../services/auth";
 
 const authenticateUser = async (req: Request<AuthPayload, any, AuthPayload>, res: Response) => {
-  const { employe_id, password } = req.body ?? {};
+  const { username, password } = req.body ?? {};
 
-  if (!employe_id || !password) {
+  if (!username || !password) {
     res.status(400).json({ message: "Invalid employe_id or password" });
     return;
   }
 
   try {
     // TODO)) Implement user authentication
-    const data = await serverLogin(employe_id, password);
-    const token = generateToken(employe_id);
-    const refreshToken = generateRefreshToken(employe_id);
+    const data = await serverLogin(username, password);
+    const token = generateToken(data.NIK);
+    const refreshToken = generateRefreshToken(data.NIK);
 
     res.json({
       message: "User authenticated",
