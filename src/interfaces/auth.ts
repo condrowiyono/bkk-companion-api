@@ -2,6 +2,7 @@ export type ServerLoginResponse = [
   {
     statuss: number;
     pesan: string;
+    NIK: string;
   }
 ];
 

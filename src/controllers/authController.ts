@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { generateRefreshToken, generateToken } from "../utils/auth";
 import { AuthPayload, RefreshTokenPayload } from "../interfaces/auth";
+import { serverLogin } from "../services/auth";
 
 const authenticateUser = async (req: Request<AuthPayload, any, AuthPayload>, res: Response) => {
   const { employe_id, password } = req.body ?? {};
@@ -13,16 +14,18 @@ const authenticateUser = async (req: Request<AuthPayload, any, AuthPayload>, res
 
   try {
     // TODO)) Implement user authentication
-    // const data = await serverLogin(employe_id, password);
+    const data = await serverLogin(employe_id, password);
     const token = generateToken(employe_id);
     const refreshToken = generateRefreshToken(employe_id);
 
     res.json({
       message: "User authenticated",
       token: token,
+      employe_id: data.NIK,
       refresh_token: refreshToken,
     });
   } catch (e) {
+    console.error(e);
     res.status(401).json({ message: "Invalid employe_id or password" });
   }
 };
