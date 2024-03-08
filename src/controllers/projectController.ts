@@ -4,11 +4,11 @@ import { Request, Response } from "express";
 import safeParseResponse from "../utils/safeParseResponse";
 import { decodeJwt } from "../utils/decode-jwt";
 import {
-  ApprovalStatus,
   ServerApprovalResponse,
   ServerProjectDetailResponse,
   ServerProjectHistoryResponse,
-} from "../interfaces/approval";
+} from "../interfaces/project";
+import { ApprovalStatus } from "../interfaces/approval";
 
 dotenv.config();
 const baseURL = process.env.BASE_URL || "https://www.google.com";
