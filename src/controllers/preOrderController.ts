@@ -49,11 +49,23 @@ const getPreOrderDetail = async (req: Request, res: Response) => {
   }
   const url = new URL(baseURL);
   url.pathname = `approvalmgt/public/index.php/PO/PODetailHeader/${token}/${employeId}/${code}`;
+
+  const itemURL = new URL(baseURL);
+  itemURL.pathname = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
+
   try {
     const response = await fetch(url);
     const data = await safeParseResponse<ServerPreOrderDetailResponse>(response);
     // Only return the first data, trim the returned array
-    res.json({ message: "Success", data: data[0] });
+    const itemResponse = await fetch(itemURL);
+    const itemData = await safeParseResponse<ServerPreOrderItemResponse>(itemResponse);
+
+    const formattedData = {
+      ...data[0],
+      items: itemData,
+    };
+
+    res.json({ message: "Success", data: formattedData });
   } catch (e) {
     res.json({ message: "Error fetching data" });
   }
