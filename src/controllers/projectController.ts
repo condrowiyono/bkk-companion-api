@@ -1,17 +1,14 @@
-import dotenv from "dotenv";
 import { Request, Response } from "express";
 
-import safeParseResponse from "../utils/safeParseResponse";
 import { decodeJwt } from "../utils/decode-jwt";
+import safeFetch from "../utils/safeFetch";
 import {
   ServerApprovalResponse,
+  ServerProjectsResponse,
   ServerProjectDetailResponse,
   ServerProjectHistoryResponse,
 } from "../interfaces/project";
 import { ApprovalStatus } from "../interfaces/approval";
-
-dotenv.config();
-const baseURL = process.env.BASE_URL || "https://www.google.com";
 
 const getProjects = async (req: Request, res: Response) => {
   const decoded = decodeJwt(req);
@@ -21,16 +18,10 @@ const getProjects = async (req: Request, res: Response) => {
   }
 
   const { employe_id: employeId, token } = decoded;
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/proyek/proyekDaftarBelum/${token}/${employeId}`;
+  const url = `approvalmgt/public/index.php/proyek/proyekDaftarBelum/${token}/${employeId}`;
+  const response = await safeFetch<ServerProjectsResponse>(url);
 
-  try {
-    const response = await fetch(url);
-    const data = await safeParseResponse<ServerProjectDetailResponse>(response);
-    res.json({ message: "Success", data });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  res.json(response);
 };
 
 const getProjectDetail = async (req: Request, res: Response) => {
@@ -43,18 +34,10 @@ const getProjectDetail = async (req: Request, res: Response) => {
     return;
   }
 
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/proyek/proyekDetail/${token}/${employeId}/${code}`;
+  const url = `approvalmgt/public/index.php/proyek/proyekDetail/${token}/${employeId}/${code}`;
+  const response = await safeFetch<ServerProjectDetailResponse>(url);
 
-  try {
-    const response = await fetch(url);
-    const data = await safeParseResponse<ServerProjectDetailResponse>(response);
-
-    // Only return the first data, trim the returned array
-    res.json({ message: "Success", data: data[0] });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  res.json({ ...response, data: response.data?.[0] });
 };
 
 const getProjectHistory = async (req: Request, res: Response) => {
@@ -66,17 +49,10 @@ const getProjectHistory = async (req: Request, res: Response) => {
     return;
   }
 
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/proyek/proyekDaftarRiwayat/${token}/${employeId}`;
+  const url = `approvalmgt/public/index.php/proyek/proyekDaftarRiwayat/${token}/${employeId}`;
+  const response = await safeFetch<ServerProjectHistoryResponse>(url);
 
-  try {
-    const response = await fetch(url);
-    const data = await safeParseResponse<ServerProjectHistoryResponse>(response);
-
-    res.json({ message: "Success", data });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  res.json(response);
 };
 
 const approveProject = async (req: Request, res: Response) => {
@@ -95,16 +71,10 @@ const approveProject = async (req: Request, res: Response) => {
     return;
   }
 
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/proyek/proyekDetailApproved/${token}/${employeId}/${code}/${approvals}`;
+  const url = `approvalmgt/public/index.php/proyek/proyekDetailApproved/${token}/${employeId}/${code}/${approvals}`;
+  const response = await safeFetch<ServerApprovalResponse>(url, { method: "POST" });
 
-  try {
-    const response = await fetch(url, { method: "POST" });
-    const data = await safeParseResponse<ServerApprovalResponse>(response);
-    res.json({ message: "Success", data: data[0] });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  res.json({ ...response, data: response.data?.[0] });
 };
 
 export { getProjects, getProjectDetail, getProjectHistory, approveProject };

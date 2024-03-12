@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
 import { Request, Response } from "express";
 
-import safeParseResponse from "../utils/safeParseResponse";
 import { decodeJwt } from "../utils/decode-jwt";
+import safeFetch from "../utils/safeFetch";
 import {
   ServerPreOrderResponse,
   ServerPreOrderDetailResponse,
@@ -10,9 +9,6 @@ import {
   ServerApprovalResponse,
 } from "../interfaces/preOrder";
 import { ApprovalStatus } from "../interfaces/approval";
-
-dotenv.config();
-const baseURL = process.env.BASE_URL || "https://www.google.com";
 
 // TODO)) Remove hardcoded employeId
 const getPreOrders = async (req: Request, res: Response) => {
@@ -25,17 +21,10 @@ const getPreOrders = async (req: Request, res: Response) => {
     return;
   }
 
-  const url = new URL(baseURL);
+  const url = `approvalmgt/public/index.php/PO/PODaftarBelum/${token}/${employeId}`;
+  const response = await safeFetch<ServerPreOrderResponse>(url);
 
-  url.pathname = `approvalmgt/public/index.php/PO/PODaftarBelum/${token}/${employeId}`;
-
-  try {
-    const response = await fetch(url);
-    const data = await safeParseResponse<ServerPreOrderResponse>(response);
-    res.json({ message: "Success", data });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  res.json(response);
 };
 
 const getPreOrderDetail = async (req: Request, res: Response) => {
@@ -47,28 +36,19 @@ const getPreOrderDetail = async (req: Request, res: Response) => {
     res.status(400).json({ message: "Invalid token or id" });
     return;
   }
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/PO/PODetailHeader/${token}/${employeId}/${code}`;
 
-  const itemURL = new URL(baseURL);
-  itemURL.pathname = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
+  const url = `approvalmgt/public/index.php/PO/PODetailHeader/${token}/${employeId}/${code}`;
+  const itemURL = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
 
-  try {
-    const response = await fetch(url);
-    const data = await safeParseResponse<ServerPreOrderDetailResponse>(response);
-    // Only return the first data, trim the returned array
-    const itemResponse = await fetch(itemURL);
-    const itemData = await safeParseResponse<ServerPreOrderItemResponse>(itemResponse);
+  const response = await safeFetch<ServerPreOrderDetailResponse>(url);
+  const itemResponse = await safeFetch<ServerPreOrderItemResponse>(itemURL);
 
-    const formattedData = {
-      ...data[0],
-      items: itemData,
-    };
+  const formattedData = {
+    ...response,
+    data: { ...response.data?.[0], items: itemResponse.data },
+  };
 
-    res.json({ message: "Success", data: formattedData });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  res.json(formattedData);
 };
 
 const getPreOrderItem = async (req: Request, res: Response) => {
@@ -80,16 +60,10 @@ const getPreOrderItem = async (req: Request, res: Response) => {
     res.status(400).json({ message: "Invalid token or id" });
     return;
   }
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
-  try {
-    const response = await fetch(url);
-    const data = await safeParseResponse<ServerPreOrderItemResponse>(response);
-    // Only return the first data, trim the returned array
-    res.json({ message: "Success", data });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  const url = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
+  const response = await safeFetch<ServerPreOrderItemResponse>(url);
+
+  res.json(response);
 };
 
 const getPreOrderHistory = async (req: Request, res: Response) => {
@@ -102,17 +76,9 @@ const getPreOrderHistory = async (req: Request, res: Response) => {
     return;
   }
 
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/PO/PODaftarRiwayat/${token}/${employeId}`;
-
-  try {
-    const response = await fetch(url);
-    const data = await safeParseResponse<ServerPreOrderResponse>(response);
-
-    res.json({ message: "Success", data });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  const url = `approvalmgt/public/index.php/PO/PODaftarRiwayat/${token}/${employeId}`;
+  const response = await safeFetch<ServerPreOrderResponse>(url);
+  res.json(response);
 };
 
 const approvePreOrder = async (req: Request, res: Response) => {
@@ -130,15 +96,12 @@ const approvePreOrder = async (req: Request, res: Response) => {
     res.status(400).json({ message: "Invalid approvals" });
     return;
   }
-  const url = new URL(baseURL);
-  url.pathname = `approvalmgt/public/index.php/PO/PODetailApproved/${token}/${employeId}/${code}/${approvals}`;
-  try {
-    const response = await fetch(url, { method: "POST" });
-    const data = await safeParseResponse<ServerApprovalResponse>(response);
-    res.json({ message: "Success", data: data[0] });
-  } catch (e) {
-    res.json({ message: "Error fetching data" });
-  }
+  const url = `approvalmgt/public/index.php/PO/PODetailApproved/${token}/${employeId}/${code}/${approvals}`;
+  const response = await safeFetch<ServerApprovalResponse>(url, {
+    method: "POST",
+  });
+
+  res.json({ ...response, data: response.data?.[0] });
 };
 
 export { getPreOrders, getPreOrderDetail, getPreOrderItem, approvePreOrder, getPreOrderHistory };

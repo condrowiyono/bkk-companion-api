@@ -32,6 +32,7 @@ app.use(authRouter);
 app.use(projectRouter);
 app.use(profileRouter);
 app.use(preOrderRouter);
+app.use((_, res) => res.status(404).json({ message: "Not Found" }));
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
