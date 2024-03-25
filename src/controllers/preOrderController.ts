@@ -12,8 +12,7 @@ import { ApprovalStatus } from "../interfaces/approval";
 
 // TODO)) Remove hardcoded employeId
 const getPreOrders = async (req: Request, res: Response) => {
-  // const employeId = decodeJwt(req)?.employe_id;
-  const employeId = "6207";
+  const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
 
   if (!token || !employeId) {
@@ -28,8 +27,7 @@ const getPreOrders = async (req: Request, res: Response) => {
 };
 
 const getPreOrderDetail = async (req: Request, res: Response) => {
-  // const employeId = decodeJwt(req)?.employe_id;
-  const employeId = "6207";
+  const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
   const code = req.params.code;
   if (!token || !employeId || !code) {
@@ -52,8 +50,7 @@ const getPreOrderDetail = async (req: Request, res: Response) => {
 };
 
 const getPreOrderItem = async (req: Request, res: Response) => {
-  // const employeId = decodeJwt(req)?.employe_id;
-  const employeId = "6207";
+  const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
   const code = req.params.code;
   if (!token || !employeId || !code) {
@@ -67,8 +64,7 @@ const getPreOrderItem = async (req: Request, res: Response) => {
 };
 
 const getPreOrderHistory = async (req: Request, res: Response) => {
-  // const employeId = decodeJwt(req)?.employe_id;
-  const employeId = "6207";
+  const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
 
   if (!token || !employeId) {
@@ -82,8 +78,7 @@ const getPreOrderHistory = async (req: Request, res: Response) => {
 };
 
 const approvePreOrder = async (req: Request, res: Response) => {
-  // const employeId = decodeJwt(req)?.employe_id;
-  const employeId = "6207";
+  const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
   const code = req.params.code;
   const approvals = req.body.approvals;
