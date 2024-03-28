@@ -8,6 +8,7 @@ import jwtMiddleware from "./middleware/jwt";
 import projectRouter from "./routers/projectRouter";
 import authRouter from "./routers/authRouter";
 import profileRouter from "./routers/profileRouter";
+import searchRouter from "./routers/searchRouter";
 import preOrderRouter from "./routers/preOrderRouter";
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use(authRouter);
 app.use(projectRouter);
 app.use(profileRouter);
 app.use(preOrderRouter);
+app.use(searchRouter);
 app.use((_, res) => res.status(404).json({ message: "Not Found" }));
 
 app.listen(port, () => {
