@@ -7,7 +7,7 @@ export type ServerApprovalResponse = [
   }
 ];
 
-export type PreOrder = {
+export type PurchaseOrder = {
   statuss: number;
   pesan: string;
   divisi: string;
@@ -45,6 +45,6 @@ export type Item = {
   subTotal: number;
 };
 
-export type ServerPreOrderResponse = PreOrder[];
-export type ServerPreOrderDetailResponse = [PreOrder];
-export type ServerPreOrderItemResponse = Item[];
+export type ServerPurchaseOrderResponse = PurchaseOrder[];
+export type ServerPurchaseOrderDetailResponse = [PurchaseOrder];
+export type ServerPurchaseOrderItemResponse = Item[];

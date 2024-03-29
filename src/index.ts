@@ -9,7 +9,7 @@ import projectRouter from "./routers/projectRouter";
 import authRouter from "./routers/authRouter";
 import profileRouter from "./routers/profileRouter";
 import searchRouter from "./routers/searchRouter";
-import preOrderRouter from "./routers/preOrderRouter";
+import purchaseOrderRouter from "./routers/purchaseOrderRouter";
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ app.get("/protected", jwtMiddleware, (req: Request, res: Response) => {
 app.use(authRouter);
 app.use(projectRouter);
 app.use(profileRouter);
-app.use(preOrderRouter);
+app.use(purchaseOrderRouter);
 app.use(searchRouter);
 app.use((_, res) => res.status(404).json({ message: "Not Found" }));
 

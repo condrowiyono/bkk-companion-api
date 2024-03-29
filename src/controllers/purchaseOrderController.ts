@@ -3,15 +3,15 @@ import { Request, Response } from "express";
 import { decodeJwt } from "../utils/decode-jwt";
 import safeFetch from "../utils/safeFetch";
 import {
-  ServerPreOrderResponse,
-  ServerPreOrderDetailResponse,
-  ServerPreOrderItemResponse,
+  ServerPurchaseOrderResponse,
+  ServerPurchaseOrderDetailResponse,
+  ServerPurchaseOrderItemResponse,
   ServerApprovalResponse,
-} from "../interfaces/preOrder";
+} from "../interfaces/purchaseOrder";
 import { ApprovalStatus } from "../interfaces/approval";
 
 // TODO)) Remove hardcoded employeId
-const getPreOrders = async (req: Request, res: Response) => {
+const getPurchaseOrders = async (req: Request, res: Response) => {
   const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
 
@@ -21,12 +21,12 @@ const getPreOrders = async (req: Request, res: Response) => {
   }
 
   const url = `approvalmgt/public/index.php/PO/PODaftarBelum/${token}/${employeId}`;
-  const response = await safeFetch<ServerPreOrderResponse>(url);
+  const response = await safeFetch<ServerPurchaseOrderResponse>(url);
 
   res.json(response);
 };
 
-const getPreOrderDetail = async (req: Request, res: Response) => {
+const getPurchaseOrderDetail = async (req: Request, res: Response) => {
   const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
   const code = req.params.code;
@@ -38,8 +38,8 @@ const getPreOrderDetail = async (req: Request, res: Response) => {
   const url = `approvalmgt/public/index.php/PO/PODetailHeader/${token}/${employeId}/${code}`;
   const itemURL = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
 
-  const response = await safeFetch<ServerPreOrderDetailResponse>(url);
-  const itemResponse = await safeFetch<ServerPreOrderItemResponse>(itemURL);
+  const response = await safeFetch<ServerPurchaseOrderDetailResponse>(url);
+  const itemResponse = await safeFetch<ServerPurchaseOrderItemResponse>(itemURL);
 
   const formattedData = {
     ...response,
@@ -49,7 +49,7 @@ const getPreOrderDetail = async (req: Request, res: Response) => {
   res.json(formattedData);
 };
 
-const getPreOrderItem = async (req: Request, res: Response) => {
+const getPurchaseOrderItem = async (req: Request, res: Response) => {
   const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
   const code = req.params.code;
@@ -58,12 +58,12 @@ const getPreOrderItem = async (req: Request, res: Response) => {
     return;
   }
   const url = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
-  const response = await safeFetch<ServerPreOrderItemResponse>(url);
+  const response = await safeFetch<ServerPurchaseOrderItemResponse>(url);
 
   res.json(response);
 };
 
-const getPreOrderHistory = async (req: Request, res: Response) => {
+const getPurchaseOrderHistory = async (req: Request, res: Response) => {
   const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
 
@@ -73,11 +73,11 @@ const getPreOrderHistory = async (req: Request, res: Response) => {
   }
 
   const url = `approvalmgt/public/index.php/PO/PODaftarRiwayat/${token}/${employeId}`;
-  const response = await safeFetch<ServerPreOrderResponse>(url);
+  const response = await safeFetch<ServerPurchaseOrderResponse>(url);
   res.json(response);
 };
 
-const approvePreOrder = async (req: Request, res: Response) => {
+const approvePurchaseOrder = async (req: Request, res: Response) => {
   const employeId = decodeJwt(req)?.employe_id;
   const token = decodeJwt(req)?.token;
   const code = req.params.code;
@@ -99,4 +99,10 @@ const approvePreOrder = async (req: Request, res: Response) => {
   res.json({ ...response, data: response.data?.[0] });
 };
 
-export { getPreOrders, getPreOrderDetail, getPreOrderItem, approvePreOrder, getPreOrderHistory };
+export {
+  getPurchaseOrders,
+  getPurchaseOrderDetail,
+  getPurchaseOrderItem,
+  approvePurchaseOrder,
+  getPurchaseOrderHistory,
+};
