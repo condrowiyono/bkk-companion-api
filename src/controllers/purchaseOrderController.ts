@@ -37,13 +37,22 @@ const getPurchaseOrderDetail = async (req: Request, res: Response) => {
 
   const url = `approvalmgt/public/index.php/PO/PODetailHeader/${token}/${employeId}/${code}`;
   const itemURL = `approvalmgt/public/index.php/PO/PODetailDetail/${token}/${employeId}/${code}`;
+  const checkStatusURL = `approvalmgt/public/index.php/PO/PODaftarCekStatus/${token}/${employeId}/${code}`;
 
-  const response = await safeFetch<ServerPurchaseOrderDetailResponse>(url);
-  const itemResponse = await safeFetch<ServerPurchaseOrderItemResponse>(itemURL);
+  const [response, itemResponse, checkStatusResponse] = await Promise.all([
+    safeFetch<ServerPurchaseOrderDetailResponse>(url),
+    safeFetch<ServerPurchaseOrderItemResponse>(itemURL),
+    safeFetch<ServerPurchaseOrderDetailResponse>(checkStatusURL),
+  ]);
 
   const formattedData = {
-    ...response,
-    data: { ...response.data?.[0], items: itemResponse.data },
+    status: 200,
+    message: "Success",
+    data: {
+      ...response.data?.[0],
+      status: checkStatusResponse.data?.[0]?.statusAksi,
+      items: itemResponse.data,
+    },
   };
 
   res.json(formattedData);

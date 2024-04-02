@@ -19,6 +19,7 @@ export type ServerProjectsResponse = [
     tgl_kontrak: string;
     nilai_prod_rp?: string;
     no_kontrak: string;
+    statusAksi: ApprovalStatus;
   }
 ];
 

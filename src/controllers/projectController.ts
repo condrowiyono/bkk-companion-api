@@ -35,9 +35,20 @@ const getProjectDetail = async (req: Request, res: Response) => {
   }
 
   const url = `approvalmgt/public/index.php/proyek/proyekDetail/${token}/${employeId}/${code}`;
-  const response = await safeFetch<ServerProjectDetailResponse>(url);
+  const checkStatusURL = `approvalmgt/public/index.php/proyek/proyekDaftarCekStatus/${token}/${employeId}/${code}`;
+  const [response, checkStatusResponse] = await Promise.all([
+    safeFetch<ServerProjectDetailResponse>(url),
+    safeFetch<ServerProjectDetailResponse>(checkStatusURL),
+  ]);
 
-  res.json({ ...response, data: response.data?.[0] });
+  const status = checkStatusResponse.data?.[0]?.statusAksi;
+  const rest = response.data?.[0];
+
+  res.json({
+    status: 200,
+    message: "Success",
+    data: { ...rest, status },
+  });
 };
 
 const getProjectHistory = async (req: Request, res: Response) => {

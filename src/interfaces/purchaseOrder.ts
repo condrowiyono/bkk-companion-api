@@ -29,6 +29,7 @@ export type PurchaseOrder = {
   app_pm: string;
   app_kuu: string;
   imei: null | string;
+  statusAksi?: ApprovalStatus;
 };
 
 export type Item = {
