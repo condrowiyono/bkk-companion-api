@@ -32,9 +32,13 @@ const search = async (req: Request, res: Response) => {
   const { data: purchaseOrders } = await safeFetch<ServerPurchaseOrderResponse>(purchaseOrderURL);
 
   const response: SearchResult[] = [];
+  const searchLower = query.toLowerCase();
 
   projects?.forEach((project) => {
-    if (project.nama_prod.toLowerCase().includes(query.toLowerCase())) {
+    const idLower = project.kode_prod.toLowerCase();
+    const nameLower = project.nama_prod.toLowerCase();
+
+    if (idLower.includes(searchLower) || nameLower.includes(searchLower)) {
       response.push({
         title: project.nama_prod,
         id: project.kode_prod,
@@ -44,7 +48,10 @@ const search = async (req: Request, res: Response) => {
   });
 
   purchaseOrders?.forEach((po) => {
-    if (po.VendorName.toLowerCase().includes(query.toLowerCase())) {
+    const idLower = po.PONumber2.toLowerCase();
+    const vendorLower = po.VendorName.toLowerCase();
+
+    if (idLower.includes(searchLower) || vendorLower.includes(searchLower)) {
       response.push({
         title: po.VendorName,
         id: po.PONumber2,
@@ -81,9 +88,13 @@ const searchHistory = async (req: Request, res: Response) => {
   const { data: purchaseOrders } = await safeFetch<ServerPurchaseOrderResponse>(purchaseOrderURL);
 
   const response: SearchResult[] = [];
+  const searchLower = query.toLowerCase();
 
   projects?.forEach((project) => {
-    if (project.nama_prod.toLowerCase().includes(query.toLowerCase())) {
+    const idLower = project.kode_prod.toLowerCase();
+    const nameLower = project.nama_prod.toLowerCase();
+
+    if (idLower.includes(searchLower) || nameLower.includes(searchLower)) {
       response.push({
         title: project.nama_prod,
         id: project.kode_prod,
@@ -93,7 +104,10 @@ const searchHistory = async (req: Request, res: Response) => {
   });
 
   purchaseOrders?.forEach((po) => {
-    if (po.VendorName.toLowerCase().includes(query.toLowerCase())) {
+    const idLower = po.PONumber2.toLowerCase();
+    const vendorLower = po.VendorName.toLowerCase();
+
+    if (idLower.includes(searchLower) || vendorLower.includes(searchLower)) {
       response.push({
         title: po.VendorName,
         id: po.PONumber2,
