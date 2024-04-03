@@ -9,8 +9,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
+    "firebase-admin": "^12.0.0",
     "jsonwebtoken": "^9.0.2",
-    "querystring": "^0.2.1"
+    "querystring": "^0.2.1",
+    "sequelize": "7.0.0-alpha.4",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

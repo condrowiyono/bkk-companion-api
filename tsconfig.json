@@ -8,5 +8,6 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "baseUrl": "src",
     "outDir": "dist",
+    "resolveJsonModule": true
   }
 }

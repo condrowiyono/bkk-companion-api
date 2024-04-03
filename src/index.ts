@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+import "./database/instance";
+import "./firebase/index";
+
 import jwtMiddleware from "./middleware/jwt";
 
 import projectRouter from "./routers/projectRouter";
@@ -10,6 +13,7 @@ import authRouter from "./routers/authRouter";
 import profileRouter from "./routers/profileRouter";
 import searchRouter from "./routers/searchRouter";
 import purchaseOrderRouter from "./routers/purchaseOrderRouter";
+import notificationRouter from "./routers/notificationRouter";
 
 dotenv.config();
 
@@ -34,6 +38,7 @@ app.use(projectRouter);
 app.use(profileRouter);
 app.use(purchaseOrderRouter);
 app.use(searchRouter);
+app.use(notificationRouter);
 app.use((_, res) => res.status(404).json({ message: "Not Found" }));
 
 app.listen(port, () => {
