@@ -23,7 +23,12 @@ const sendNotification = async (req: Request, res: Response) => {
   }
 
   const payload = req.body;
-  const { title, body, employe_id, screen = "", task_id = "" } = payload;
+  const { employe_id, title, body, screen = "", task_id = "" } = payload;
+
+  if (!employe_id) {
+    res.status(400).json({ message: "Invalid employe_id" });
+    return;
+  }
 
   const user = await User.findOne({ where: { employe_id } });
 
@@ -32,10 +37,21 @@ const sendNotification = async (req: Request, res: Response) => {
     return;
   }
 
+  if (!user.get("fcm_token")) {
+    res.status(400).json({ message: "User has not registered device" });
+    return;
+  }
+
+  if (!title || !body) {
+    res.status(400).json({ message: "Invalid payload" });
+    return;
+  }
+
   // Send notification to fcm_token
   const messaging = getMessaging();
 
   await messaging.send({
+    token: user.get("fcm_token") as string,
     notification: {
       title,
       body,
@@ -44,7 +60,6 @@ const sendNotification = async (req: Request, res: Response) => {
       screen,
       task_id,
     },
-    token: user.get("fcm_token") as string,
   });
 
   // and then save to database
