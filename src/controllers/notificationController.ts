@@ -23,7 +23,7 @@ const sendNotification = async (req: Request, res: Response) => {
   }
 
   const payload = req.body;
-  const { title, body, employe_id } = payload;
+  const { title, body, employe_id, screen, task_id } = payload;
 
   const user = await User.findOne({ where: { employe_id } });
 
@@ -40,6 +40,10 @@ const sendNotification = async (req: Request, res: Response) => {
       title,
       body,
     },
+    data: {
+      screen,
+      task_id,
+    },
     token: user.get("fcm_token") as string,
   });
 
@@ -49,6 +53,8 @@ const sendNotification = async (req: Request, res: Response) => {
     employe_id,
     title,
     body,
+    screen,
+    task_id,
   });
 
   res.json({ message: "success", data });
@@ -64,6 +70,7 @@ const getNotifications = async (req: Request, res: Response) => {
 
   const notifications = await Notification.findAll({
     where: { employe_id },
+    order: [["createdAt", "DESC"]],
   });
 
   res.json({ message: "success", data: notifications });

@@ -17,6 +17,9 @@ const Notification = sequelize.define("Notification", {
   fcm_token: DataTypes.STRING,
   title: DataTypes.STRING,
   body: DataTypes.STRING,
+  // data
+  screen: DataTypes.STRING,
+  task_id: DataTypes.STRING,
 });
 
 async function init() {
