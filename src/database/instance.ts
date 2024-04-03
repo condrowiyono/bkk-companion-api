@@ -3,7 +3,11 @@ import { Sequelize, DataTypes } from "sequelize";
 const sequelize = new Sequelize("sqlite::memory:");
 
 const User = sequelize.define("User", {
-  employe_id: DataTypes.STRING,
+  employe_id: {
+    type: DataTypes.STRING,
+    primaryKey: true,
+    unique: true,
+  },
   fcm_token: DataTypes.STRING,
 });
 

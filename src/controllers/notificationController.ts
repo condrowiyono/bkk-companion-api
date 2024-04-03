@@ -2,16 +2,26 @@ import { Request, Response } from "express";
 import { User, Notification } from "../database/instance";
 import { decodeJwt } from "../utils/decode-jwt";
 import { getMessaging } from "firebase-admin/messaging";
+import basicAuth from "basic-auth";
 
 const registerDevice = async (req: Request, res: Response) => {
   const payload = req.body;
   const { fcm_token, employe_id } = payload;
-  const user = await User.create({ fcm_token, employe_id });
+  const [user] = await User.upsert({ fcm_token, employe_id });
 
   res.json({ message: "success", data: user });
 };
 
 const sendNotification = async (req: Request, res: Response) => {
+  const acceptedUsername = "bukaka";
+  const acceptedPassword = "app";
+  const credentials = basicAuth(req);
+
+  if (!credentials || credentials.name !== acceptedUsername || credentials.pass !== acceptedPassword) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
   const payload = req.body;
   const { title, body, employe_id } = payload;
 
