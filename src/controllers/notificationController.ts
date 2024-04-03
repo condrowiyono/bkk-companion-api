@@ -23,7 +23,7 @@ const sendNotification = async (req: Request, res: Response) => {
   }
 
   const payload = req.body;
-  const { title, body, employe_id, screen, task_id } = payload;
+  const { title, body, employe_id, screen = "", task_id = "" } = payload;
 
   const user = await User.findOne({ where: { employe_id } });
 
